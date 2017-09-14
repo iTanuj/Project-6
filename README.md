@@ -3,9 +3,11 @@ Linux Server Configuration. This is the sixth and last project for Udacity FSND.
 
 # About
 IP address: http://34.232.210.119
+
 Port: 2200
+
 To login:
-`ssh -i .ssh/grader_udacity grader@34.232.210.119 -p 2200`
+`ssh -i [graderKeyName] grader@34.232.210.119 -p 2200`
 
 ## Get your server
 1. Start a new Ubuntu Linux server instance on Amazon Lightsail
