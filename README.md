@@ -6,7 +6,7 @@ IP address: http://34.232.210.119
 Port: 2200
 
 ## Get your server
-1. Start a new Ubuntu Linux server instance on Amazon Lightsail. 
+1. Start a new Ubuntu Linux server instance on Amazon Lightsail
 2. Choose OS and then Ubuntu
 3. Wait for it to start up
 
@@ -55,4 +55,85 @@ sudo dpkg-reconfigure tzdata
 sudo apt-get install apache2
 sudo apt-get install libapache2-mod-wsgi
 ```
+3.  Install and configure PostgreSQL
+```sh
+sudo apt-get install postgresql postgresql-contrib
+```
+- To ensure that remote connections to PostgreSQL are not allowed, do check that the configuration file `/etc/postgresql/9.3/main/pg_hba.conf` only allow connections from the local host addresses 127.0.0.1 for IPv4 and ::1 for IPv6
+- Create a PostgreSQL user called `catalog` and database `catalog`
+```sh
+sudo -u postgres createuser -P catalog
+sudo -u postgres createdb -O catalog catalog
+```
+4. Installing required python modules
+```sh
+sudo apt-get install python-psycopg2 python-flask
+sudo apt-get install python-sqlalchemy python-pip
+sudo pip install oauth2client
+sudo pip install requests
+sudo pip install httplib2
+```
+5. Install git and setup your Catalog project files
+```sh
+sudo apt-get install git
+cd /var/www
+sudo mkdir FlaskApp
+cd FlaskApp```
 
+## Deploy the Item Catalog project
+```sh
+git clone https://github.com/iTanuj/Project-4.git
+sudo mv ./Project-4 ./FlaskApp
+cd FlaskApp
+sudo mv project.py __init__.py
+```
+In all .py files replace create_engine() as `create_engine('postgresql://catalog:password@localhost/catalog')`
+```sh
+sudo apt-get install python-pip
+sudo python database_setup.py
+sudo python insert_games.py
+```
+### Creating apache2 conf
+Create apache2 config file for FlaskApp
+`sudo nano /etc/apache2/sites-available/FlaskApp.conf`
+and paste this:
+```sh
+<VirtualHost *:80>
+	ServerName 34.232.210.119
+	ServerAdmin tanuj.goodboy77@gmail.com
+	WSGIScriptAlias / /var/www/FlaskApp/flaskapp.wsgi
+	<Directory /var/www/FlaskApp/FlaskApp/>
+		Order allow,deny
+		Allow from all
+	</Directory>
+	Alias /static /var/www/FlaskApp/FlaskApp/static
+	<Directory /var/www/FlaskApp/FlaskApp/static/>
+		Order allow,deny
+		Allow from all
+	</Directory>
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	LogLevel warn
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+Enable this by `sudo a2ensite FlaskApp` after disabling default file by running `sudo a2dissite 000-default.conf`
+Make Apache2 changes live: `sudo service apache reload`
+### Creating .wsgi
+Move to FlaskApp
+```sh
+cd /var/www/FlaskApp
+sudo nano flaskapp.wsgi 
+```
+and paste this:
+```sh
+#!/usr/bin/python
+import sys
+import logging
+logging.basicConfig(stream=sys.stderr)
+sys.path.insert(0,"/var/www/FlaskApp/")
+
+from FlaskApp import app as application
+application.secret_key = '<secret_key>'
+```
+### Restart Apache
+`sudo service apache2 restart`
