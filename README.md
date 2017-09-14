@@ -87,12 +87,23 @@ sudo mv ./Project-4 ./FlaskApp
 cd FlaskApp
 sudo mv project.py __init__.py
 ```
-In all .py files replace create_engine() as `create_engine('postgresql://catalog:password@localhost/catalog')`
+1. Go to http://console.developers.google.com and add extra info for youur credentials:
+-In Authorized Javascript origins, add -> http://34.232.210.119 and http://ec2-34-232-210-119.compute-1.amazonaws.com
+
+-And in Authorized, add -> http://ec2-34-232-210-119.compute-1.amazonaws.com and http://ec2-34-232-210-119.compute-1.amazonaws.com/oauth/google
+- Download this updated .json file and upload to Catalog github repo
+- Now we have to update the previous client_secrets.json for this remove old and download new as:
+```sh
+rm client_secrets.json
+wget "https://github.com/iTanuj/Project-4/raw/master/client_secrets.json"
+```
+2. In all .py files replace create_engine() as `create_engine('postgresql://catalog:password@localhost/catalog')`
 ```sh
 sudo apt-get install python-pip
 sudo python database_setup.py
 sudo python insert_games.py
 ```
+3. In `__init__.py`, change path of CLIENT_ID to `/var/www/FlaskApp/FlaskApp/client_secrets.json` 
 ### Creating apache2 conf
 Create apache2 config file for FlaskApp
 `sudo nano /etc/apache2/sites-available/FlaskApp.conf`
