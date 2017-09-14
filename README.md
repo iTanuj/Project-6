@@ -4,6 +4,8 @@ Linux Server Configuration. This is the sixth and last project for Udacity FSND.
 # About
 IP address: http://34.232.210.119
 Port: 2200
+To login:
+`ssh -i .ssh/grader_udacity grader@34.232.210.119 -p 2200`
 
 ## Get your server
 1. Start a new Ubuntu Linux server instance on Amazon Lightsail
@@ -44,6 +46,20 @@ sudo ufw enable
 3. Create an SSH key pair for grader using ssh-keygen
 `ssh-keygen -t rsa`
 (This key will be provided to grader in `Notes` section)
+4. Copying this key to grader user
+```sh
+sudo mkdir /home/grader/.ssh
+sudo touch /home/grader/.ssh/authorized_keys
+sudo nano /home/grader/.ssh/authorized_keys
+```
+paste the generated key, save and exit.
+5. Projecting permissions on this key
+```sh
+sudo chmod 700 /home/grader/.ssh
+sudo chmod 644 /home/grader/.ssh/authorized_keys
+```
+6. Reload SSH using `sudo service ssh restart` and now rader can log in using:
+`ssh -i [KeyName] grader@34.232.210.119`
 
 ## Prepare to deploy your project
 1. Configure the local timezone to UTC (choose None of the above then on next page -> choose UTC)
