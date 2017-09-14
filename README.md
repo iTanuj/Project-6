@@ -64,6 +64,8 @@ sudo chmod 644 /home/grader/.ssh/authorized_keys
 7. Change value of `PasswordAuthentication` to ` no`
 8. Reload SSH using `sudo service ssh restart` and now grader can log in using:
 `ssh -i [KeyName] grader@34.232.210.119`
+9. Fix sudo resolve host error:
+Change first line of `/etc/hosts` such that first line now reads `127.0.0.1 localhost ip-172-26-3-247`
 
 ## Prepare to deploy your project
 1. Configure the local timezone to UTC (choose None of the above then on next page -> choose UTC)
