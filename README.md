@@ -60,7 +60,9 @@ paste the generated key, save and exit.
 sudo chmod 700 /home/grader/.ssh
 sudo chmod 644 /home/grader/.ssh/authorized_keys
 ```
-6. Reload SSH using `sudo service ssh restart` and now rader can log in using:
+6. Disable root login by `sudo nano /etc/ssh/sshd_config` and change value `PermitRootLogin` to `no`
+7. Change value of `PasswordAuthentication` to ` no`
+8. Reload SSH using `sudo service ssh restart` and now grader can log in using:
 `ssh -i [KeyName] grader@34.232.210.119`
 
 ## Prepare to deploy your project
