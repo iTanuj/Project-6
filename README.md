@@ -7,7 +7,7 @@ IP address: http://34.232.210.119
 Port: 2200
 
 To login:
-`ssh -i [graderKeyName] grader@34.232.210.119 -p 2200`
+`ssh -i .ssh/grader_rsa grader@34.232.210.119 -p 2200`
 
 ## Get your server
 1. Start a new Ubuntu Linux server instance on Amazon Lightsail
@@ -62,8 +62,7 @@ sudo chmod 644 /home/grader/.ssh/authorized_keys
 ```
 6. Disable root login by `sudo nano /etc/ssh/sshd_config` and change value `PermitRootLogin` to `no`
 7. Change value of `PasswordAuthentication` to ` no`
-8. Reload SSH using `sudo service ssh restart` and now grader can log in using:
-`ssh -i [KeyName] grader@34.232.210.119`
+8. Reload SSH using `sudo service ssh restart`
 9. Fix sudo resolve host error:
 Change first line of `/etc/hosts` such that first line now reads `127.0.0.1 localhost ip-172-26-3-247`
 
