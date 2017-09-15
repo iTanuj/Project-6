@@ -23,6 +23,15 @@ sudo apt-get upgrade
 2. For auto upgrades
 ```sh
 sudo dpkg-reconfigure --priority=low unattended-upgrades
+sudo apt-get install unattended-upgrades
+```
+Edit the file `/etc/apt/apt.conf.d/50unattended-upgrades`, uncomment `"${distro_id}:${distro_codename}-updates"` and save it.
+Change the contents of the file `/etc/apt/apt.conf.d/10periodic` such it's contents show as:
+```sh
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Download-Upgradeable-Packages "1";
+APT::Periodic::AutocleanInterval "7";
+APT::Periodic::Unattended-Upgrade "1";
 ```
 3. Change the SSH port from 22 to 2200 (change 22 to 2200 in editing menu)
 ```sh
