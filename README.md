@@ -1,8 +1,8 @@
 # Project-6
-Linux Server Configuration. This is the sixth and last project for Udacity FSND. You can visit the hosted server at http://34.232.210.119
+Linux Server Configuration. This is the sixth and last project for Udacity FSND. ~~You can visit the hosted server at http://34.232.210.119~~ . Free month over and so, deleted instance. 
 
 # About
-IP address: http://34.232.210.119
+IP address: ~~http://34.232.210.119~~
 
 Port: 2200
 
